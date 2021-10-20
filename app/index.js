@@ -1,7 +1,6 @@
 var cvs = document.getElementById('canvas');
 var ctx = cvs.getContext('2d');
 
-
 var dino       = getImage('assets/images/dino.png');
 var bg         = getImage('assets/images/bg.png');
 var fg         = getImage('assets/images/fg.png');
@@ -11,18 +10,13 @@ var pipeBottom = getImage('assets/images/pipeBottom.png');
 var fly         = getAudio('assets/audio/fly.mp3');
 var score_audio = getAudio('assets/audio/score.mp3');
 
-var gap = 90;
-
 setCtxSettings();
 
 function startGame () {
     draw();
 }
 
-
-// При нажатии на какую-либо кнопку
-document.addEventListener('keydown', moveUp);
-
+// Устанавливаем настройки приложения
 function setCtxSettings () {
     ctx.fillStyle = '#000';
     ctx.font      = '24px Verdana';
@@ -34,15 +28,14 @@ function moveUp () {
 }
 
 // Создание блоков
+var gap = 90;
 var barriers = [];
-
 barriers[0] = {
     x: cvs.width,
     y: 0,
 };
-
+// Счетчик
 var score = 0;
-
 // Позиция птички
 var birdPosition = {
     x   : 10,
@@ -63,6 +56,24 @@ function getAudio (url) {
 }
 
 function draw () {
+    // Отрисовываем стартовый экран
+    drawStartScreen();
+
+    // Отрисовываем уровень
+    drawLevelScreen();
+
+    // Отрисовываем экран конца игры
+    drawGameOverScreen();
+
+    // Запускаем анимацию игры
+    requestAnimationFrame(draw);
+}
+
+function drawStartScreen () {
+
+}
+
+function drawLevelScreen () {
     // Отрисовка бэкграунда
     drawImage(bg, 0, 0);
 
@@ -103,9 +114,10 @@ function draw () {
 
     // Отрисовка результатов игры
     drawScore();
+}
 
-    // Запускаем анимацию игры
-    requestAnimationFrame(draw);
+function drawGameOverScreen() {
+
 }
 
 function drawImage (img, x, y) {
@@ -131,5 +143,9 @@ function reloadPage () {
     location.reload();
 }
 
+// Отслеживаем действия пользователя
+document.addEventListener('keydown', moveUp);
 
+
+//
 window.onload = startGame;
